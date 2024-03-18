@@ -39,17 +39,17 @@ class InterfazApp:
         self.agregar_button = tk.Button(button_frame, text='Agregar Proceso', command=self.agregar_proceso, bg='#9f56a5', fg='white', relief='raised', font=('Arial', 10, 'bold'))
         self.agregar_button.pack(side='left', padx=5)
         
-        self.agregar_button = tk.Button(button_frame, text='Bloquear', command=self.bloquear_proceso, bg='#4e74b8', fg='white', relief='raised', font=('Arial', 10, 'bold'))
-        self.agregar_button.pack(side='left', padx=5)
+        self.bloquear_button = tk.Button(button_frame, text='Bloquear', command=self.bloquear_proceso, bg='#4e74b8', fg='white', relief='raised', font=('Arial', 10, 'bold'))
+        self.bloquear_button.pack(side='left', padx=5)
         
-        self.agregar_button = tk.Button(button_frame, text='Activar', command=self.activar_proceso, bg='#2e856e', fg='white', relief='raised', font=('Arial', 10, 'bold'))
-        self.agregar_button.pack(side='left', padx=5)
+        self.activar_button = tk.Button(button_frame, text='Activar', command=self.activar_proceso, bg='#2e856e', fg='white', relief='raised', font=('Arial', 10, 'bold'))
+        self.activar_button.pack(side='left', padx=5)
         
-        self.agregar_button = tk.Button(button_frame, text='Finalizar', command=self.finalizar_proceso, bg='#ff0000', fg='white', relief='raised', font=('Arial', 10, 'bold'))
-        self.agregar_button.pack(side='left', padx=5)
+        self.finalizar_button = tk.Button(button_frame, text='Finalizar', command=self.finalizar_proceso, bg='#ff0000', fg='white', relief='raised', font=('Arial', 10, 'bold'))
+        self.finalizar_button.pack(side='left', padx=5)
         
-        self.agregar_button = tk.Button(button_frame, text='Actualizar Procesos', command=self.actualizar_procesos, bg='#4B4B4B', fg='white', relief='raised', font=('Arial', 10, 'bold'))
-        self.agregar_button.pack(side='left', padx=5)
+        self.actualizar_button = tk.Button(button_frame, text='Actualizar Procesos', command=self.actualizar_procesos, bg='#4B4B4B', fg='white', relief='raised', font=('Arial', 10, 'bold'))
+        self.actualizar_button.pack(side='left', padx=5)
         
         self.cambiar_estados()
         self.agregar_proceso()
