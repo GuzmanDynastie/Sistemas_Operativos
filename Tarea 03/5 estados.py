@@ -42,11 +42,11 @@ class InterfazApp:
         self.bloquear_button = tk.Button(button_frame, text='Bloquear', command=self.bloquear_proceso, bg='#4e74b8', fg='white', relief='raised', font=('Arial', 10, 'bold'))
         self.bloquear_button.pack(side='left', padx=5)
         
-        self.activar_button = tk.Button(button_frame, text='Activar', command=self.activar_proceso, bg='#2e856e', fg='white', relief='raised', font=('Arial', 10, 'bold'))
-        self.activar_button.pack(side='left', padx=5)
+        self.continuar_button = tk.Button(button_frame, text='Continuar', command=self.continuar_proceso, bg='#2e856e', fg='white', relief='raised', font=('Arial', 10, 'bold'))
+        self.continuar_button.pack(side='left', padx=5)
         
-        self.finalizar_button = tk.Button(button_frame, text='Finalizar', command=self.finalizar_proceso, bg='#ff0000', fg='white', relief='raised', font=('Arial', 10, 'bold'))
-        self.finalizar_button.pack(side='left', padx=5)
+        self.terminar_button = tk.Button(button_frame, text='Terminar', command=self.terminar_proceso, bg='#ff0000', fg='white', relief='raised', font=('Arial', 10, 'bold'))
+        self.terminar_button.pack(side='left', padx=5)
         
         self.actualizar_button = tk.Button(button_frame, text='Actualizar Procesos', command=self.actualizar_procesos, bg='#4B4B4B', fg='white', relief='raised', font=('Arial', 10, 'bold'))
         self.actualizar_button.pack(side='left', padx=5)
@@ -62,24 +62,23 @@ class InterfazApp:
             proceso = Proceso(pid, nombre, 'Nuevo')
             self.tree.insert('', 'end', values=(proceso.pid, proceso.nombre, proceso.estado))
             self.procesos_agregados += 1
-            self.master.after(random.randint(5000, 10000), self.agregar_proceso)
+            self.master.after(random.randint(15000, 25000), self.agregar_proceso)
             
     def bloquear_proceso(self):
         self.seleccion('Bloqueado', '')
                 
-    def activar_proceso(self):
-        self.seleccion('Activo', '')
+    def continuar_proceso(self):
+        self.seleccion('Listo', '')
         
-    def finalizar_proceso(self):
-        self.seleccion('Terminado', 'eliminar')
-        
+    def terminar_proceso(self):
+        self.seleccion('Terminado', 'eliminar') 
         
     def cambiar_estados(self):
         for item_id in self.tree.get_children():
             estado_actual = self.tree.item(item_id, 'values')[2]
-            nuevo_estado = random.choice(['Nuevo', 'Preparado', 'Activo', 'Bloqueado', 'Terminado'])
+            nuevo_estado = random.choice(['Nuevo', 'Ejecucion', 'Listo', 'Bloqueado'])
             while nuevo_estado == estado_actual:
-                nuevo_estado = random.choice(['Nuevo', 'Preparado', 'Activo', 'Bloqueado', 'Terminado'])
+                nuevo_estado = random.choice(['Nuevo', 'Ejecucion', 'Listo', 'Bloqueado'])
             self.tree.item(item_id, values=(self.tree.item(item_id, 'values')[0], self.tree.item(item_id, 'values')[1], nuevo_estado))
         self.master.after(random.randint(15000, 20000), self.cambiar_estados)
         
@@ -88,7 +87,6 @@ class InterfazApp:
             self.tree.delete(item)
             
         procesos_reales = obtener_procesos()
-        
         for pid, nombre in procesos_reales:
             self.tree.insert('', 'end', values=(pid, nombre, 'Nuevo'))
             self.procesos_agregados = 20
@@ -97,10 +95,14 @@ class InterfazApp:
         seleccion = self.tree.selection()
         if seleccion:
             for item in seleccion:
-                self.tree.item(item, values=(self.tree.item(item, 'values')[0], self.tree.item(item, 'values')[1], f'{estado}'))
-                if f'{eliminar}' == 'eliminar':
-                    self.tree.delete(item)
-                    self.procesos_agregados -= 1              
+                estado_actual = self.tree.item(item, 'values')[2]
+                if estado_actual == 'Bloqueado':
+                    self.tree.item(item, values=(self.tree.item(item, 'values')[0], self.tree.item(item, 'values')[1], 'Ejecucion'))
+                if (not(estado_actual) == 'Bloqueado'):
+                    self.tree.item(item, values=(self.tree.item(item, 'values')[0], self.tree.item(item, 'values')[1], f'{estado}'))
+                    if eliminar == 'eliminar':
+                        self.tree.delete(item)
+                        self.procesos_agregados -= 1          
                 
 def obtener_procesos():
     procesos = []
