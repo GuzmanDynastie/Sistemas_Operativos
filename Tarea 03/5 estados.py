@@ -100,7 +100,7 @@ class InterfazApp:
                     self.tree.item(item, values=(self.tree.item(item, 'values')[0], self.tree.item(item, 'values')[1], 'Ejecucion'))
                 if (not(estado_actual) == 'Bloqueado'):
                     self.tree.item(item, values=(self.tree.item(item, 'values')[0], self.tree.item(item, 'values')[1], f'{estado}'))
-                    if eliminar == 'eliminar':
+                    if f'{eliminar}' == 'eliminar':
                         self.tree.delete(item)
                         self.procesos_agregados -= 1          
                 
